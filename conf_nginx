@@ -38,6 +38,13 @@ server {
     		add_header Pragma public;
     		add_header Cache-Control "public";
 }
+
+#https to http
+#server {
+#       listen 443;
+#       server_name _ *;
+#       rewrite ^(.*) http://$host$1 permanent;
+# }
         
 }
 
