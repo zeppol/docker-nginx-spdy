@@ -1,0 +1,32 @@
+server {
+        listen   80; 
+	listen   443 ssl spdy;
+	#ssl on;
+
+
+        root /var/www/; 
+        index index.php index.html index.htm;
+
+        server_name ejemplo.com; 
+
+	ssl_certificate      /etc/ssl/certs/ssl-cert-snakeoil.pem;
+        ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
+
+        location / {
+        try_files $uri $uri/ /index.php;
+        }
+
+        location ~ \.php$ {
+        
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass http://apache;
+
+         }
+
+         location ~ /\.ht {
+                deny all;
+        }
+}
+
