@@ -1,5 +1,8 @@
+#nginx-conf
+
 server {
-        listen   80; 
+        listen   80;
+        #listen ssl and add spdy
 	listen   443 ssl spdy;
 	#ssl on;
 
@@ -28,5 +31,13 @@ server {
          location ~ /\.ht {
                 deny all;
         }
+        
+        #cache expires files
+        location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+    		expires 30d;
+    		add_header Pragma public;
+    		add_header Cache-Control "public";
+}
+        
 }
 
