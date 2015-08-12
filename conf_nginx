@@ -3,7 +3,9 @@ server {
         #listen ssl and add spdy
         listen   443 ssl spdy;
         #ssl on;
-
+	
+	add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+	
         ssl_certificate      /etc/ssl/certs/ssl-cert-snakeoil.pem;
         ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
 
