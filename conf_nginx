@@ -41,6 +41,8 @@ server {
 
 ##############################COOKIE-FREE DOMAINS######################################
 
+# docs: http://www.typofree.org/article/archive/2009/august/title/enabling-cookie-free-domains-in-nginx/
+
 	fastcgi_hide_header Set-Cookie;
 
 #######################################################################################
@@ -55,7 +57,7 @@ server {
 
  # cache expires files
  # @todo no repeat       
-	location ~* \.(?:ico|css|js|js?1439477160|gif|jpe?g|png)$ {
+	location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
                 #try_files $uri $uri/ /index.php;
                 proxy_set_header X-Real-IP  $remote_addr;
                 proxy_set_header X-Forwarded-For $remote_addr;
