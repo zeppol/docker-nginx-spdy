@@ -1,10 +1,17 @@
 server {
         listen   80;
-        #listen ssl and add spdy
+        rewrite ^(.*) https://$host$request_uri? permanent;
+
+        location ~ /\.ht {
+                deny all;
+        }
+
+}
+server {
         listen   443 ssl spdy;
-        #ssl on;
+        ssl on;
 	
-	add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+	#add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 	
         ssl_certificate      /etc/ssl/certs/ssl-cert-snakeoil.pem;
         ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
@@ -16,8 +23,9 @@ server {
                 proxy_set_header Host $host;
                 proxy_pass http://apache;
 
- #cache expires files
-        location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+ # cache expires files
+ # @todo no repeat       
+	location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
                 #try_files $uri $uri/ /index.php;
                 proxy_set_header X-Real-IP  $remote_addr;
                 proxy_set_header X-Forwarded-For $remote_addr;
@@ -37,7 +45,6 @@ server {
         }
 
 
-        #rewrite ^(.*) http://$host$1 permanent;
         #rewrite ^(.*) http://$host$1/test.html permanent;
 
 }
