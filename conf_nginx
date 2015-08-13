@@ -39,6 +39,13 @@ server {
         ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
 #######################################################################################
 
+##############################COOKIE-FREE DOMAINS######################################
+
+	fastcgi_hide_header Set-Cookie;
+
+#######################################################################################
+
+
         location / {
                 #try_files $uri $uri/ /index.php;
                 proxy_set_header X-Real-IP  $remote_addr;
@@ -48,7 +55,7 @@ server {
 
  # cache expires files
  # @todo no repeat       
-	location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+	location ~* \.(?:ico|css|js|js?1439477160|gif|jpe?g|png)$ {
                 #try_files $uri $uri/ /index.php;
                 proxy_set_header X-Real-IP  $remote_addr;
                 proxy_set_header X-Forwarded-For $remote_addr;
