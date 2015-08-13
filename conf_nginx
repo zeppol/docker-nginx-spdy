@@ -1,20 +1,43 @@
+#################################HTTP#################################################
+
 server {
         listen   80;
+# Rewrite http to https
         rewrite ^(.*) https://$host$request_uri? permanent;
 
         location ~ /\.ht {
                 deny all;
+
         }
 
 }
+
+################################HTTPS#################################################
+
 server {
         listen   443 ssl spdy;
+
+################################PAGESPEED##############################################
+	pagespeed on;
+	pagespeed FetchHttps enable,allow_self_signed;
+	pagespeed FileCachePath /var/ngx_pagespeed_cache;
+	location ~ ".pagespeed.([a-z].)?[a-z]{2}.[^.]{10}.[^.]+" { add_header "" ""; }
+	location ~ "^/ngx_pagespeed_static/" { }
+	location ~ "^/ngx_pagespeed_beacon$" { }
+	location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
+	location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }	
+#######################################################################################
+
+
+
+##################################SSL##################################################
         ssl on;
 	
 	#add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 	
         ssl_certificate      /etc/ssl/certs/ssl-cert-snakeoil.pem;
         ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
+#######################################################################################
 
         location / {
                 #try_files $uri $uri/ /index.php;
@@ -44,7 +67,5 @@ server {
                 deny all;
         }
 
-
-        #rewrite ^(.*) http://$host$1/test.html permanent;
 
 }
