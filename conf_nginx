@@ -20,12 +20,13 @@ server {
 ################################PAGESPEED##############################################
 
 # docs: https://dreyacosta.com/instalar-el-modulo-pagespeed-en-nginx/
+# docs: https://developers.google.com/speed/pagespeed/module/filter-local-storage-cache
 	pagespeed on;
 	pagespeed FetchHttps enable,allow_self_signed;
 	pagespeed FileCachePath /var/ngx_pagespeed_cache;
 	location ~ ".pagespeed.([a-z].)?[a-z]{2}.[^.]{10}.[^.]+" { add_header "" ""; }
-#	location ~ "^/ngx_pagespeed_static/" { }
-#	location ~ "^/ngx_pagespeed_beacon$" { }
+	location ~ "^/ngx_pagespeed_static/" { }
+	location ~ "^/ngx_pagespeed_beacon$" { }
 	location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
 	location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }	
 #######################################################################################
@@ -46,7 +47,7 @@ server {
 # docs: http://www.typofree.org/article/archive/2009/august/title/enabling-cookie-free-domains-in-nginx/
 # ¿Doesn't work?
 
-	fastcgi_hide_header Set-Cookie;
+#	fastcgi_hide_header Set-Cookie;
 
 #######################################################################################
 
