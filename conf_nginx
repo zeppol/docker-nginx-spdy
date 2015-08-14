@@ -1,5 +1,7 @@
 #################################HTTP#################################################
 
+# The HTTP connection is switched to HTTPS
+
 server {
         listen   80;
 # Rewrite http to https
@@ -36,7 +38,9 @@ server {
 
 
 ##################################SSL##################################################
-        ssl on;
+
+# docs: https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04        
+	 ssl on;
 	
 	#add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 	
@@ -47,9 +51,29 @@ server {
 ##############################COOKIE-FREE DOMAINS######################################
 
 # docs: http://www.typofree.org/article/archive/2009/august/title/enabling-cookie-free-domains-in-nginx/
+# docs: http://webmasters.stackexchange.com/questions/1772/how-do-i-set-up-a-cookie-less-domain
 # ¿Doesn't work?
 
 #	fastcgi_hide_header Set-Cookie;
+
+#######################################################################################
+
+###############################GZIP COMPRESSION########################################
+
+# docs: https://mattstauffer.co/blog/enabling-gzip-on-nginx-servers-including-laravel-forge
+
+
+        # Gzip Settings
+        
+
+        gzip on;
+	gzip_min_length 1100;
+	gzip_buffers 4 32k;
+	gzip_types text/plain application/x-javascript text/xml text/css;
+	gzip_vary on;
+
+
+        # Gzip_http_version 1.1; If it doesn't work try with version 1.0
 
 #######################################################################################
 
