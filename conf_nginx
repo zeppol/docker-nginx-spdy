@@ -18,12 +18,14 @@ server {
         listen   443 ssl spdy;
 
 ################################PAGESPEED##############################################
+
+# docs: https://dreyacosta.com/instalar-el-modulo-pagespeed-en-nginx/
 	pagespeed on;
 	pagespeed FetchHttps enable,allow_self_signed;
 	pagespeed FileCachePath /var/ngx_pagespeed_cache;
 	location ~ ".pagespeed.([a-z].)?[a-z]{2}.[^.]{10}.[^.]+" { add_header "" ""; }
-	location ~ "^/ngx_pagespeed_static/" { }
-	location ~ "^/ngx_pagespeed_beacon$" { }
+#	location ~ "^/ngx_pagespeed_static/" { }
+#	location ~ "^/ngx_pagespeed_beacon$" { }
 	location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
 	location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }	
 #######################################################################################
@@ -42,11 +44,13 @@ server {
 ##############################COOKIE-FREE DOMAINS######################################
 
 # docs: http://www.typofree.org/article/archive/2009/august/title/enabling-cookie-free-domains-in-nginx/
+# ¿Doesn't work?
 
 	fastcgi_hide_header Set-Cookie;
 
 #######################################################################################
 
+# docs: https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-reverse-proxy-for-apache 
 
         location / {
                 #try_files $uri $uri/ /index.php;
