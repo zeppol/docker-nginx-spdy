@@ -43,7 +43,8 @@ server {
 	 ssl on;
 	
 	#add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
-	
+
+        ssl_protocols        TLSv1 TLSv1.1 TLSv1.2;
         ssl_certificate      /etc/ssl/certs/ssl-cert-snakeoil.pem;
         ssl_certificate_key  /etc/ssl/private/ssl-cert-snakeoil.key;
 #######################################################################################
